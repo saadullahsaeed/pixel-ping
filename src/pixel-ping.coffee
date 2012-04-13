@@ -17,8 +17,12 @@ store = {}
 # Record a single incoming hit from the remote pixel.
 record = (params) ->
   return unless key = params.query?.key
-  store[key] or= 0
-  store[key] +=  1
+  tag = params.query?.tag
+  type = params.query?.type
+  store[key] or= {}
+  store[key][tag] or= {}
+  store[key][tag][type] or= 0
+  store[key][tag][type] += 1
 
 # Serializes the current `store` to JSON, and creates a fresh one. Add a
 # `secret` token to the request object, if configured.
